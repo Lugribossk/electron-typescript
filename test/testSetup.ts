@@ -23,6 +23,7 @@ let oldWrap = (sinon as any).wrapMethod;
         });
         setupDone = true;
     }
+    return out;
 };
 
 expect.installPlugin(unexpectedSinon);

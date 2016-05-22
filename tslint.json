@@ -23,7 +23,7 @@
         "no-reference": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
-        "no-trailing-whitespace": true,
+//        "no-trailing-whitespace": true,
         "no-unreachable": true,
         "no-var-keyword": true,
         "no-var-requires": true,

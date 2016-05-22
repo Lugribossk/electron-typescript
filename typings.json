@@ -5,5 +5,8 @@
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "node": "registry:dt/node#6.0.0+20160514165920",
     "sinon": "registry:dt/sinon#1.16.0+20160517064723"
+  },
+  "dependencies": {
+    "bluebird": "registry:npm/bluebird#3.3.4+20160515010139"
   }
 }
