@@ -4,7 +4,6 @@ machine:
 
 dependencies:
   pre:
-    - sudo dpkg --add-architecture i386
     - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
     - sudo apt-get update
     - sudo apt-get -y --force-yes --no-install-recommends install wine nsis
