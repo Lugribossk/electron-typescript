@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 6.1.0
+
+dependencies:
+  override:
+    - npm install
+    - npm run dist
+
+test:
+  override:
+    - npm test
+  post:
+    - cp target/*.xml ${CIRCLE_TEST_REPORTS}

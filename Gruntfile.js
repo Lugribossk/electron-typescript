@@ -157,14 +157,24 @@ module.exports = grunt => {
         }
     });
 
+    let lintSrc = ["src/**/*.ts", "test/**/*.ts"];
     require("grunt-tslint/tasks/tslint")(grunt);
     grunt.config.set("tslint", {
         dev: {
-            src: ["src/**/*.ts", "test/**/*.ts"]
+            src: lintSrc
         }
+        // ci: {
+        //     options: {
+        //         formatter: "junit",
+        //         formattersDirectory: "TODO",
+        //         outputFile: "target/TEST-lint.xml"
+        //     },
+        //     src: lintSrc
+        // }
     });
 
     grunt.registerTask("test", ["tslint:dev", "webpack:test", "mochaTest:dev"]);
+    grunt.registerTask("test-ci", ["tslint:dev", "webpack:test", "mochaTest:ci"]);
     grunt.registerTask("executable", ["clean:app", "webpack:app", "app-dependencies", "electron:app"]);
     grunt.registerTask("installer", ["executable", "electron-builder-config", "electron-builder:installer"]);
 };

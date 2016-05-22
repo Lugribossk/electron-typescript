@@ -1,5 +1,5 @@
 # electron-typescript
-
+[![CircleCI](https://circleci.com/gh/Lugribossk/electron-typescript.svg?style=svg)](https://circleci.com/gh/Lugribossk/electron-typescript)
 
 
 ## IntelliJ run configurations
