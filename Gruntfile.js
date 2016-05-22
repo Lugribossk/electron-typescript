@@ -78,10 +78,19 @@ module.exports = grunt => {
         }
     });
 
-    grunt.registerTask("fake-package-json", "Create a fake package.json file", () => {
+    grunt.registerTask("app-dependencies", "Install app dependencies separately", function () {
+        let done = this.async();
         grunt.file.write("target/app-js/package.json", JSON.stringify({
             dependencies: pkg.dependencies
         }));
+
+        grunt.util.spawn({
+            cmd: "npm",
+            args: ["install"],
+            opts: {
+                cwd: "target/app-js"
+            }
+        }, done);
     });
 
     require("grunt-electron/tasks/electron")(grunt);
@@ -106,8 +115,10 @@ module.exports = grunt => {
         grunt.file.write("target/electron-builder.json", JSON.stringify({
             win: {
                 title: pkg.productName,
-                icon: "installer-assets/icon.ico",
-                version: pkg.version
+                icon: "installer/icon.ico",
+                version: pkg.version,
+                publisher: "Blah",
+                nsiTemplate: "installer/installer.nsi"
             }
         }));
         grunt.file.mkdir("target/app-installer");
@@ -154,6 +165,6 @@ module.exports = grunt => {
     });
 
     grunt.registerTask("test", ["tslint:dev", "webpack:test", "mochaTest:dev"]);
-    grunt.registerTask("executable", ["clean:app", "webpack:app", "fake-package-json", "electron:app"]);
+    grunt.registerTask("executable", ["clean:app", "webpack:app", "app-dependencies", "electron:app"]);
     grunt.registerTask("installer", ["executable", "electron-builder-config", "electron-builder:installer"]);
 };
