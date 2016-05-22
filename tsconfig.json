@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "outDir": "./target/compiler-js",
+        "sourceMap": true,
+        "target": "es5" // "es2015" would be better but breaks Uglify
+    },
+    "exclude": [
+        ".idea",
+        "node_modules",
+        "target"
+    ]
+}
