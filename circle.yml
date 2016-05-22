@@ -3,12 +3,22 @@ machine:
     version: 6.1.0
 
 dependencies:
+  pre:
+    - sudo dpkg --add-architecture i386
+    - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+    - sudo apt-get update
+    - sudo apt-get -y --force-yes --no-install-recommends install wine nsis
   override:
+    - npm install -g grunt-cli
     - npm install
-    - npm run dist
+    - grunt installer
 
 test:
   override:
-    - npm test
+    - grunt test-ci
   post:
     - cp target/*.xml ${CIRCLE_TEST_REPORTS}
+
+general:
+  artifacts:
+    - "target/app-installer"

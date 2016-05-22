@@ -34,9 +34,6 @@
     "webpack": "1.13.1"
   },
   "scripts": {
-    "dist": "grunt executable",
-    "postinstall": "typings install",
-    "start": "grunt executable && electron target/app-js",
-    "test": "grunt test-ci"
+    "postinstall": "typings install"
   }
 }

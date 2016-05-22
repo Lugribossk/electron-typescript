@@ -95,18 +95,20 @@ module.exports = grunt => {
 
     require("grunt-electron/tasks/electron")(grunt);
     grunt.config.set("electron", {
-        app: {
+        options: {
+            name: "app",
+            dir: "target/app-js",
+            version: pkg.devDependencies["electron-prebuilt"],
+            overwrite: true,
+            out: "target",
+            asar: true,
+            "app-version": pkg.version,
+            "build-version": pkg.version
+        },
+        win: {
             options: {
-                name: "app",
-                dir: "target/app-js",
                 platform: "win32",
-                arch: "x64",
-                version: pkg.devDependencies["electron-prebuilt"],
-                overwrite: true,
-                out: "target",
-                asar: true,
-                "app-version": pkg.version,
-                "build-version": pkg.version
+                arch: "x64"
             }
         }
     });
@@ -175,6 +177,6 @@ module.exports = grunt => {
 
     grunt.registerTask("test", ["tslint:dev", "webpack:test", "mochaTest:dev"]);
     grunt.registerTask("test-ci", ["tslint:dev", "webpack:test", "mochaTest:ci"]);
-    grunt.registerTask("executable", ["clean:app", "webpack:app", "app-dependencies", "electron:app"]);
+    grunt.registerTask("executable", ["clean:app", "webpack:app", "app-dependencies", "electron:win"]);
     grunt.registerTask("installer", ["executable", "electron-builder-config", "electron-builder:installer"]);
 };
