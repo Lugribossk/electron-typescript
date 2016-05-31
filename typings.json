@@ -4,6 +4,8 @@
     "lodash": "registry:dt/lodash#3.10.0+20160330154726",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "node": "registry:dt/node#6.0.0+20160514165920",
+    "react": "registry:dt/react#0.14.0+20160423065914",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "sinon": "registry:dt/sinon#1.16.0+20160517064723"
   },
   "dependencies": {

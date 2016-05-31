@@ -22,6 +22,12 @@ module.exports = grunt => {
                 extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
             },
             target: "electron",
+            module: {
+                loaders: [{
+                    loader: "ts-loader",
+                    test: /\.tsx?$/
+                }]
+            },
             node: {
                 __filename: true,
                 __dirname: true
@@ -29,15 +35,8 @@ module.exports = grunt => {
             externals: nodeModules
         },
         app: {
-            context: "src",
             entry: {
-                main: "./index.ts"
-            },
-            module: {
-                loaders: [{
-                    loader: "ts-loader",
-                    test: /\.tsx?$/
-                }]
+                main: "./src/index.ts"
             },
             output: {
                 path: "target/app-js",
@@ -54,6 +53,14 @@ module.exports = grunt => {
                     }
                 })
             ]
+        },
+        renderer: {
+            entry: "./src/renderer/renderer.tsx",
+            target: "web",
+            output: {
+                path: "target/app-js",
+                filename: "renderer.js"
+            }
         },
         test: {
             devtool: "source-map",

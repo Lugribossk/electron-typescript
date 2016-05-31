@@ -7,6 +7,10 @@ electron.app.commandLine.appendSwitch("widevine-cdm-path", widevine.path);
 electron.app.commandLine.appendSwitch("widevine-cdm-version", widevine.version);
 
 electron.app.on("ready", () => {
+    electron.app.on("browser-window-created", (err, win) => {
+        (win as any).toggleDevTools();
+    });
+
     let window = new electron.BrowserWindow({
         alwaysOnTop: true,
         webPreferences: {
@@ -21,7 +25,7 @@ electron.app.on("ready", () => {
     });
 
     window.setMenu(null);
-    window.loadURL("https://netflix.com");
+    window.loadURL("file://" + __dirname + "/renderer/index.html");
 
     _.forEach([], () => {});
 });
