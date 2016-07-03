@@ -15,7 +15,7 @@
   "devDependencies": {
     "electron-builder": "2.6.0",
     "electron-packager": "7.0.2",
-    "electron-prebuilt": "1.1.1",
+    "electron-prebuilt": "1.2.1",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-copy": "1.0.0",
@@ -24,6 +24,7 @@
     "grunt-mocha-test": "0.12.7",
     "grunt-tslint": "3.1.0",
     "grunt-webpack": "1.0.11",
+    "html-webpack-plugin": "2.19.0",
     "mocha": "2.4.5",
     "sinon": "1.17.4",
     "source-map-loader": "0.1.5",
@@ -34,7 +35,8 @@
     "typings": "1.0.4",
     "unexpected": "10.13.3",
     "unexpected-sinon": "10.2.0",
-    "webpack": "1.13.1"
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
   },
   "scripts": {
     "postinstall": "typings install"

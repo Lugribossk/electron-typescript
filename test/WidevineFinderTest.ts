@@ -6,6 +6,7 @@ import WidevineFinder from "../src/WidevineFinder";
 describe("WidevineFinder", () => {
     it("should find path and version on Windows.", () => {
         sinon.stub(fs, "readdirSync").returns(["1.4.8.885"]);
+        sinon.stub(fs, "existsSync").returns(true);
 
         let widevine = new WidevineFinder({
             env: {

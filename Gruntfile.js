@@ -1,6 +1,7 @@
 /*global module, require*/
 "use strict";
 let webpack = require("webpack");
+let HtmlPlugin = require("html-webpack-plugin");
 
 module.exports = grunt => {
     grunt.initConfig({});
@@ -44,6 +45,11 @@ module.exports = grunt => {
                 pathinfo: true
             },
             plugins: [
+                new webpack.DefinePlugin({
+                    "process.env": {
+                        NODE_ENV: JSON.stringify("production")
+                    }
+                }),
                 new webpack.optimize.UglifyJsPlugin({
                     minimize: true,
                     // Remove all comments.
@@ -60,7 +66,17 @@ module.exports = grunt => {
             output: {
                 path: "target/app-js",
                 filename: "renderer.js"
-            }
+            },
+            plugins: [
+                new HtmlPlugin({
+                    template: "./src/renderer/index.html"
+                }),
+                new webpack.DefinePlugin({
+                    "process.env": {
+                        NODE_ENV: JSON.stringify("production")
+                    }
+                })
+            ]
         },
         test: {
             devtool: "source-map",
@@ -82,6 +98,53 @@ module.exports = grunt => {
                 filename: "tests.js",
                 pathinfo: true
             }
+        }
+    });
+
+    require("grunt-webpack/tasks/webpack-dev-server")(grunt);
+    grunt.config.set("webpack-dev-server", {
+        start: {
+            webpack: {
+                resolve: {
+                    // Add '.ts' and '.tsx' as resolvable extensions.
+                    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+                },
+                module: {
+                    loaders: [{
+                        loader: "ts-loader",
+                        test: /\.tsx?$/
+                    }]
+                },
+                node: {
+                    __filename: true,
+                    __dirname: true
+                },
+                watch: true,
+                keepalive: true,
+                devtool: "#cheap-module-eval-source-map",
+                // externals: nodeModules,
+                entry: "./src/renderer/renderer.tsx",
+                target: "web",
+                // output: {
+                //     path: "target/app-js",
+                //     filename: "renderer.js"
+                // },
+                plugins: [
+                    new HtmlPlugin({
+                        template: "./src/renderer/index.html"
+                    }),
+                    new webpack.DefinePlugin({
+                        "process.env": {
+                            NODE_ENV: JSON.stringify("development")
+                        }
+                    })
+                ]
+            },
+
+            publicPath: "/",
+            hot: true,
+            keepAlive: true,
+            progress: false
         }
     });
 
@@ -182,8 +245,9 @@ module.exports = grunt => {
         // }
     });
 
+    grunt.registerTask("dev", ["webpack-dev-server:start"]);
     grunt.registerTask("test", ["tslint:dev", "webpack:test", "mochaTest:dev"]);
     grunt.registerTask("test-ci", ["tslint:dev", "webpack:test", "mochaTest:ci"]);
-    grunt.registerTask("executable", ["clean:app", "webpack:app", "app-dependencies", "electron:win"]);
+    grunt.registerTask("executable", ["clean:app", "webpack:app", "webpack:renderer", "app-dependencies", "electron:win"]);
     grunt.registerTask("installer", ["executable", "electron-builder-config", "electron-builder:installer"]);
 };

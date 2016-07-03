@@ -10,8 +10,8 @@ type Process = {
  * See http://electron.atom.io/docs/tutorial/using-widevine-cdm-plugin/
  */
 export default class WidevineFinder {
-    private _version: string;
-    private _path: string;
+    private _version: string = null;
+    private _path: string = null;
     
     constructor({platform, env}: Process) {
         switch (platform) {
@@ -26,10 +26,19 @@ export default class WidevineFinder {
     private windows(env: any) {
         let versionsFolder = env.LOCALAPPDATA + "/Google/Chrome/User Data/WidevineCDM/";
         let versions = fs.readdirSync(versionsFolder);
-        if (versions.length > 0) {
-            this._version = versions[0];
-            this._path = versionsFolder + this._version + "/_platform_specific/win_x64/widevinecdmadapter.dll";
+        if (versions.length === 0) {
+            return;
         }
+        
+        let version = versions[0];
+        let path = versionsFolder + version + "/_platform_specific/win_x64/widevinecdmadapter.dll";
+
+        if (!fs.existsSync(path)) {
+            return;
+        }
+
+        this._version = version;
+        this._path = path;
     }
 
     get path() {
