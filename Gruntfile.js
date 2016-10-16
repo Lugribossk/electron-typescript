@@ -18,8 +18,7 @@ module.exports = grunt => {
     grunt.config.set("webpack", {
         options: {
             resolve: {
-                // Add '.ts' and '.tsx' as resolvable extensions.
-                extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+                extensions: ["", ".ts", ".tsx", ".js"]
             },
             target: "electron",
             node: {
@@ -52,6 +51,9 @@ module.exports = grunt => {
                     compress: {
                         warnings: false
                     }
+                }),
+                new webpack.DefinePlugin({
+                    "process.env.NODE_ENV": JSON.stringify("production")
                 })
             ]
         },
