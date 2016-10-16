@@ -1,5 +1,5 @@
 import {dialog, app, BrowserWindow, Menu} from "electron";
-import _ from "lodash";
+import * as _ from "lodash";
 import WidevineFinder from "./WidevineFinder";
 import ExtensionFinder from "./ExtensionFinder";
 

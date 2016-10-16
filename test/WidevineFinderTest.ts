@@ -1,6 +1,6 @@
-import expect from "unexpected";
-import sinon from "sinon";
-import fs from "fs";
+import * as expect from "unexpected";
+import * as sinon from "sinon";
+import * as fs from "fs";
 import WidevineFinder from "../src/WidevineFinder";
 
 describe("WidevineFinder", () => {

@@ -1,8 +1,8 @@
 import "source-map-support/register";
-import mocha from "mocha";
-import expect from "unexpected";
-import unexpectedSinon from "unexpected-sinon";
-import sinon from "sinon";
+import * as mocha from "mocha";
+import * as expect from "unexpected";
+import * as unexpectedSinon from "unexpected-sinon";
+import * as sinon from "sinon";
 
 type Wrapped = {
     restore: () => void
