@@ -40,19 +40,23 @@ export default class ExtensionFinder {
         return this._path;
     }
 
-    static REACT = "React Developer Tools";
-
-    static addIifNotExists(name: string, electron: Electron.ElectronMainAndRenderer, process: Process) {
-        let extensions = (electron.BrowserWindow as any).getDevToolsExtensions();
-        if (extensions[name]) {
-            console.info("Dev tools extension", name, "already lodaded.");
-            return;
-        }
-
-        let extension = new ExtensionFinder(name, process);
-        if (extension.path) {
-            console.info("Loading dev tools extension", name, "from", extension.path);
-            electron.BrowserWindow.addDevToolsExtension(extension.path);
-        }
+    exists() {
+        return !!this._path;
     }
 }
+
+export const findReact = (process: Process) => new ExtensionFinder("React Developer Tools", process);
+
+export const addIifNotExists = (name: string, electron: Electron.ElectronMainAndRenderer, process: Process) => {
+    let extensions = (electron.BrowserWindow as any).getDevToolsExtensions();
+    if (extensions[name]) {
+        console.info("Dev tools extension", name, "already lodaded.");
+        return;
+    }
+
+    let extension = new ExtensionFinder(name, process);
+    if (extension.path) {
+        console.info("Loading dev tools extension", name, "from", extension.path);
+        electron.BrowserWindow.addDevToolsExtension(extension.path);
+    }
+};

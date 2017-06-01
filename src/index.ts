@@ -1,16 +1,21 @@
-import {dialog, app, BrowserWindow, Menu} from "electron";
+import {dialog, app, BrowserWindow} from "electron";
 import * as _ from "lodash";
-import WidevineFinder from "./WidevineFinder";
-import ExtensionFinder from "./ExtensionFinder";
+import {findReact} from "./ExtensionFinder";
+import {findFlash, findWidevine} from "./PluginFinder";
 
 let isDevelopment = process.env.NODE_ENV !== "production";
 
-let widevine = new WidevineFinder(process);
-if (!widevine.path) {
+let widevine = findWidevine(process);
+if (!widevine.exists()) {
     dialog.showErrorBox("", "Widevine CDM plugin not found. Is Chrome installed?");
 }
-app.commandLine.appendSwitch("widevine-cdm-path", widevine.path);
-app.commandLine.appendSwitch("widevine-cdm-version", widevine.version);
+widevine.addToCommandLine(app);
+
+let flash = findFlash(process);
+if (!flash.exists()) {
+    dialog.showErrorBox("", "Flash plugin not found. Is Chrome installed?");
+}
+flash.addToCommandLine(app);
 
 app.on("ready", () => {
     // Remove all extensions that were added in previous runs in case they are outdated or not needed.
@@ -18,11 +23,11 @@ app.on("ready", () => {
 
     if (isDevelopment) {
         app.on("browser-window-created", (err, win) => {
-            (win as any).toggleDevTools();
+            win.webContents.toggleDevTools();
         });
 
-        let react = new ExtensionFinder(ExtensionFinder.REACT, process);
-        if (react.path) {
+        let react = findReact(process);
+        if (react.exists()) {
             console.info("Loading React dev tools from", react.path);
             BrowserWindow.addDevToolsExtension(react.path);
         }
@@ -43,6 +48,6 @@ app.on("ready", () => {
         window = null;
     });
 
-    window.setMenu(new Menu());
+    (window as any).setMenu(null);
     window.loadURL("https://www.netflix.com");
 });

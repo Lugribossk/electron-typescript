@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
         "jsx": "react",
+        "lib": ["dom", "es5"],
         "module": "commonjs",
         "moduleResolution": "node",
-        "noImplicitAny": true,
         "noImplicitReturns": true,
-        "outDir": "./target/compiler-js",
+        "noUnusedLocals": true,
+        "outDir": "target/compiler-js",
         "sourceMap": true,
-        "strictNullChecks": true,
+        "strict": true,
         "target": "es5" // "es2015" would be better but breaks Uglify
     },
     "include": [

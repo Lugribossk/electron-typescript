@@ -1,5 +1,4 @@
 import "source-map-support/register";
-import * as mocha from "mocha";
 import * as expect from "unexpected";
 import * as unexpectedSinon from "unexpected-sinon";
 import * as sinon from "sinon";
