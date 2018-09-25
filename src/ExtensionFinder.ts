@@ -47,7 +47,7 @@ export default class ExtensionFinder {
 
 export const findReact = (process: Process) => new ExtensionFinder("React Developer Tools", process);
 
-export const addIifNotExists = (name: string, electron: Electron.ElectronMainAndRenderer, process: Process) => {
+export const addIifNotExists = (name: string, electron: any, process: Process) => {
     let extensions = (electron.BrowserWindow as any).getDevToolsExtensions();
     if (extensions[name]) {
         console.info("Dev tools extension", name, "already lodaded.");

@@ -35,6 +35,7 @@ export default class PluginFinder {
             this.version = version;
             this.path = path.join(folder, filename);
         }
+        console.log(this.path);
     }
 
     exists() {
@@ -52,6 +53,6 @@ export default class PluginFinder {
     }
 }
 
-export const findWidevine = (process: Process) => new PluginFinder(process, "WidevineCdm", "widevine-cdm", "_platform_specific/win_x64/widevinecdmadapter.dll", true);
+export const findWidevine = (process: Process) => new PluginFinder(process, "WidevineCdm", "widevine-cdm", "_platform_specific/win_x64/widevinecdm.dll", true);
 
 export const findFlash = (process: Process) => new PluginFinder(process, "PepperFlash", "ppapi-flash", "pepflashplayer.dll");

@@ -1,15 +1,18 @@
 import {dialog, app, BrowserWindow} from "electron";
 import * as _ from "lodash";
 import {findReact} from "./ExtensionFinder";
-import {findFlash, findWidevine} from "./PluginFinder";
+import {findFlash} from "./PluginFinder";
+import * as widevine from "electron-widevinecdm";
 
 let isDevelopment = process.env.NODE_ENV !== "production";
 
-let widevine = findWidevine(process);
-if (!widevine.exists()) {
-    dialog.showErrorBox("", "Widevine CDM plugin not found. Is Chrome installed?");
-}
-widevine.addToCommandLine(app);
+// let widevine = findWidevine(process);
+// if (!widevine.exists()) {
+//     dialog.showErrorBox("", "Widevine CDM plugin not found. Is Chrome installed?");
+// }
+// widevine.addToCommandLine(app);
+
+widevine.load(app);
 
 let flash = findFlash(process);
 if (!flash.exists()) {
@@ -23,7 +26,7 @@ app.on("ready", () => {
 
     if (isDevelopment) {
         app.on("browser-window-created", (err, win) => {
-            win.webContents.toggleDevTools();
+            //win.webContents.toggleDevTools();
         });
 
         let react = findReact(process);
@@ -39,7 +42,7 @@ app.on("ready", () => {
             nodeIntegration: false,
             partition: "persist:session",
             plugins: true,
-            allowDisplayingInsecureContent: true,
+            //allowDisplayingInsecureContent: true,
             allowRunningInsecureContent: true
         }
     });
